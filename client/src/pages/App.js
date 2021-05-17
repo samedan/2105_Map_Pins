@@ -5,4 +5,5 @@ const App = () => {
   return <div>App</div>;
 };
 
+// 'withRoot' is part of materialUI
 export default withRoot(App);
