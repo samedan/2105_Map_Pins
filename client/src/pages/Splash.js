@@ -6,6 +6,13 @@ import Login from "../components/Auth/Login";
 const Splash = () => {
   const { state } = useContext(Context);
 
+  // console.log(state.isAuth);
+  // console.log(state.currentUser);
+
+  // while (!state.isAuth) {
+  //   return <p>Loading...</p>;
+  // }
+
   return state.isAuth ? <Redirect to="/" /> : <Login />;
 };
 
