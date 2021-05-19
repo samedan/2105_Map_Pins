@@ -6,7 +6,7 @@ export const BASE_URL =
     : "http://localhost:4000/graphql";
 
 export const useClient = () => {
-  const [idToken, setIdToken] = useState();
+  const [idToken, setIdToken] = useState("");
 
   useEffect(() => {
     const token = window.gapi.auth2
