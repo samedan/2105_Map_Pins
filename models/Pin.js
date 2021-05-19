@@ -16,7 +16,7 @@ const PinSchema = new mongoose.Schema(
         text: String,
         createdAt: {
           type: Date,
-          default: date.now,
+          default: Date.now,
         },
         author: {
           type: mongoose.Schema.ObjectId,
@@ -29,4 +29,4 @@ const PinSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-mondule.exports = mongoose.model("Pin", PinSchema);
+module.exports = mongoose.model("Pin", PinSchema);
