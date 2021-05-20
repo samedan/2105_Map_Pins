@@ -19,6 +19,8 @@ import {
   PIN_UPDATED_SUBSCRIPTION,
   PIN_DELETED_SUBSCRIPTION,
 } from "../graphql/subscriptions";
+// Media Query Hooks
+import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
 
 const INITIAL_VIEWPORT = {
   latitude: 37.7577,
@@ -28,6 +30,10 @@ const INITIAL_VIEWPORT = {
 
 const Map = ({ classes }) => {
   const client = useClient(); // get token from Google
+
+  // BOOLEAN
+  const mobileSize = useMediaQuery("(max-width:650px)");
+
   useEffect(() => {
     getPins();
   }, []);
@@ -39,7 +45,21 @@ const Map = ({ classes }) => {
   useEffect(() => {
     getUserPosition();
   }, []);
+
   const [popup, setPopup] = useState(null);
+  // Remove Popup if pin is deleted by the author
+  useEffect(() => {
+    const pinExists =
+      popup && // popup opened
+      state.pins.findIndex(
+        (
+          pin // index exists  of the deleted pin (-1 means not found)
+        ) => pin._id === popup._id
+      ) > -1;
+    if (!pinExists) {
+      setPopup(null);
+    }
+  }, [state.pins.length]);
 
   const getPins = async () => {
     const { getPins } = await client.request(GET_PINS_QUERY);
@@ -103,7 +123,7 @@ const Map = ({ classes }) => {
     setPopup(null);
   };
   return (
-    <div className={classes.root}>
+    <div className={mobileSize ? classes.rootMobile : classes.root}>
       <ReactMapGL
         mapboxApiAccessToken="pk.eyJ1Ijoic2FtZWRhbjc4IiwiYSI6ImNqNW1sejBtazBzYWYyd29kOW45ZGFzencifQ.O_-w9vzj7oYAJDuaIKhz-A"
         width="100vw"
@@ -112,6 +132,7 @@ const Map = ({ classes }) => {
         {...viewport}
         onViewportChange={(newViewport) => setViewport(newViewport)}
         onClick={handleMapClick}
+        scrollZoom={!mobileSize}
       >
         <div className={classes.navigationControl}>
           <NavigationControl

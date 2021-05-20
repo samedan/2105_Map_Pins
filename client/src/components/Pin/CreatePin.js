@@ -11,6 +11,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 import SaveIcon from "@material-ui/icons/SaveTwoTone";
 import { CREATE_PIN_MUTATION } from "../../graphql/mutations";
 import { useClient } from "../../client";
+import { unstable_useMediaQuery as useMediaQuery } from "@material-ui/core/useMediaQuery";
 
 const CreatePin = ({ classes }) => {
   const [title, setTitle] = useState("");
@@ -19,6 +20,7 @@ const CreatePin = ({ classes }) => {
   const { state, dispatch } = useContext(Context);
   const [submitting, setSubmitting] = useState(false);
   const client = useClient();
+  const mobileSize = useMediaQuery("(max-width:650px)");
 
   const handleDeleteDraft = () => {
     setTitle("");
@@ -109,7 +111,7 @@ const CreatePin = ({ classes }) => {
           name="content"
           label="Content"
           multiline
-          rows="6"
+          rows={mobileSize ? "3" : "6"}
           margin="normal"
           fullWidth
           variant="outlined"
