@@ -18,7 +18,8 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 
 // Subscriptions server URI
 const wsLink = new WebSocketLink({
-  uri: "ws://localhost:4000/graphql",
+  // uri: "ws://localhost:4000/graphql",
+  uri: "wss://geopins-2105.herokuapp.com/graphql",
   options: {
     reconnect: true,
   },

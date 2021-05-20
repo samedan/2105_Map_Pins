@@ -8,3 +8,7 @@ https://github.com/reedbarger/geopins
 > graphql
 > MongoDB
 > Google OAUTH
+
+Deployment
+> Heroku
+> Vercel
